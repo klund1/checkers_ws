@@ -6,7 +6,7 @@ int main() {
   Checkers myCheckers;
   //myCheckers.resetHopCheck();
   myCheckers.printBoard();
-  myCheckers.setPly(10);
+  myCheckers.setPly(8);
 
   while(myCheckers.state() == ONGOING){
     myCheckers.printMoves(WHITE);

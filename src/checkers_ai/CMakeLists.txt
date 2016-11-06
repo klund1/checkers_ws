@@ -110,17 +110,24 @@ catkin_package(
 ## Build ##
 ###########
 
+## Use c++ 11
+#  This is not kosher according to catkin, but it works 
+set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
+
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 # include_directories(include)
 include_directories(
-  ${catkin_INCLUDE_DIRS}
+  include
 )
 
 ## Declare a C++ library
 # add_library(checkers_ai
 #   src/${PROJECT_NAME}/checkers_ai.cpp
 # )
+add_library(checkers
+  src/checkers.cpp
+)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -129,6 +136,7 @@ include_directories(
 
 ## Declare a C++ executable
 # add_executable(checkers_ai_node src/checkers_ai_node.cpp)
+add_executable(playCheckers src/playCheckers.cpp src/checkers.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
@@ -138,6 +146,9 @@ include_directories(
 # target_link_libraries(checkers_ai_node
 #   ${catkin_LIBRARIES}
 # )
+target_link_libraries(playCheckers
+  checkers
+)
 
 #############
 ## Install ##
