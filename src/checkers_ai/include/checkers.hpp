@@ -1,6 +1,7 @@
 #ifndef CHECKERS_H
 #define CHECKERS_H
 
+#include <cstdint>
 #include <vector>
 using std::vector;
 
@@ -43,7 +44,7 @@ struct piece {
 };
 
 struct pos {
-  int i,j;
+  int8_t i,j;
 };
 
 typedef vector<pos> move_t;

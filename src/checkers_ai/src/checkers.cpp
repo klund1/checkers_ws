@@ -321,8 +321,8 @@ move_t Checkers::minimax(int depth,
     return best_move; //this is empty
   }
 
-  for (int i = 0; i < 8; ++i) {
-    for (int j = 0; j < 8; ++j) {
+  for (int8_t i = 0; i < 8; ++i) {
+    for (int8_t j = 0; j < 8; ++j) {
       pos cur_pos = {i,j};
       kings[i][j] = this->getPiece(cur_pos).king;
     }
