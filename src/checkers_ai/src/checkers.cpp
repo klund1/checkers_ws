@@ -14,7 +14,6 @@
 using std::string;
 char pieceChar(piece p);
 int get0to7(string msg);
-bool validPos(pos p);
 
 Checkers::Checkers() : ply_{PLY_DEFAULT}, gamma_{GAMMA_DEFAULT} {
   this->resetBoard();
@@ -247,13 +246,13 @@ int get0to7(string msg) {
   return ret_val;
 }
 
-void Checkers::aiMove(PieceType color, AiType ai) {
+move_t Checkers::aiMove(PieceType color, AiType ai) {
   move_t m;
 
   switch(color){
     case BLACK: printf("Black AI's turn!\n"); break;
     case WHITE: printf("White AI's turn!\n"); break;
-    default: printf("Unknown AI type!\n"); return;
+    default: printf("Unknown AI type!\n"); return m;
   }
 
   switch (ai) {
@@ -271,6 +270,7 @@ void Checkers::aiMove(PieceType color, AiType ai) {
   }
   printf("\n");
   this->applyMove(m);
+  return m;
 }
 
 move_t Checkers::aiMoveRandom(PieceType color) {

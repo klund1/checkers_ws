@@ -1,0 +1,4 @@
+bool color
+int8 ply
+---
+string move

@@ -9,12 +9,12 @@ using std::vector;
 #define GAMMA_DEFAULT 0.99
 
 const float POS_SCORE[8][8] = {
-  {4, 0, 4, 0, 4, 0, 4, 0}, 
-  {0, 3, 0, 3, 0, 3, 0, 4}, 
-  {4, 0, 2, 0, 2, 0, 3, 0}, 
-  {0, 3, 0, 1, 0, 2, 0, 4}, 
-  {4, 0, 2, 0, 1, 0, 3, 0}, 
-  {0, 3, 0, 2, 0, 2, 0, 4}, 
+  {4, 0, 4, 0, 4, 0, 4, 0},
+  {0, 3, 0, 3, 0, 3, 0, 4},
+  {4, 0, 2, 0, 2, 0, 3, 0},
+  {0, 3, 0, 1, 0, 2, 0, 4},
+  {4, 0, 2, 0, 1, 0, 3, 0},
+  {0, 3, 0, 2, 0, 2, 0, 4},
   {4, 0, 3, 0, 3, 0, 3, 0},
   {0, 4, 0, 4, 0, 4, 0, 4} };
 
@@ -49,6 +49,8 @@ struct pos {
 
 typedef vector<pos> move_t;
 
+bool validPos(pos p);
+
 class Checkers {
  public:
   Checkers();
@@ -60,8 +62,11 @@ class Checkers {
 
   void setPly(int ply);
 
+  bool addPiece(pos p, PieceType color, bool king);
+  bool applyMove(move_t move);
+
   void humanMove(PieceType color);
-  void aiMove(PieceType color, AiType ai);
+  move_t aiMove(PieceType color, AiType ai);
   void printMoves(PieceType color) const;
   GameState state() const;
   float score(PieceType color);
@@ -84,8 +89,6 @@ class Checkers {
 
   bool move(pos start, pos end);
   bool remove(pos p);
-  bool addPiece(pos p, PieceType color, bool king);
-  bool applyMove(move_t move);
   bool undoMove(move_t move, bool prev_kings[8][8]);
 
   int numPieces(PieceType color) const;

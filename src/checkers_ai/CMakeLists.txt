@@ -52,11 +52,10 @@ add_message_files(
 )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+add_service_files(
+  FILES
+  GetMove.srv
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -113,8 +112,8 @@ catkin_package(
 ###########
 
 ## Use c++ 11
-#  This is not kosher according to catkin, but it works 
-set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
+#  This is not kosher according to catkin, but it works
+set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
@@ -155,6 +154,7 @@ target_link_libraries(playCheckers
 
 target_link_libraries(checkers_ai
   checkers
+  ${catkin_LIBRARIES}
 )
 
 #############
