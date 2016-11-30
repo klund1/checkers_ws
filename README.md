@@ -1,6 +1,6 @@
 # CheckersBot
 ## A Checkers Playing Robot
-
+hello
 This is a ROS workspace containing all of the code needed to run a completely self-sufficient checkers playing robot.
 The robot watches the checkers board, detects a move, plans its next move, and then moves the corresponding piece.
 
