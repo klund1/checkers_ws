@@ -9,9 +9,9 @@ This ROS package contains the implementation of the state machine that controls 
 
 The possible states are:
  - Start
- - Wait for move
+ - Wait for human move
  - Compute move
- - Move
+ - Move arm
 
 The inputs the trigger state transitions are:
  - Reset (from button/user input)
@@ -21,10 +21,10 @@ The inputs the trigger state transitions are:
  - Finished moving piece (from `checkers_arm`)
 
 Subscribes to:
- - `/events`
+ - `/events` (`std_msgs/String`)
 
 Publishes to:
- - `/state`
+ - `/state` (`std_msgs/String`)
 
 ### CV System: `checkers_vis`
 
