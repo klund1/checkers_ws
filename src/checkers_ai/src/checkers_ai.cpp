@@ -1,17 +1,22 @@
 #include "checkers.hpp"
+#include <string>
 #include "ros/ros.h"
 #include "checkers_ai/AddPiece.h"
-#include "checkers_ai/MovePiece.h"
-#include "checkers_ai/GetMove.h"
+#include "std_msgs/String.h"
 
-Checkers myCheckers;
+using std::string;
+
+// Global variables
+Checkers my_checkers;
+string last_state = "";
+
 
 void addPieceCallback(const checkers_ai::AddPiece::ConstPtr& msg) {
   if (msg->clear) {
-    myCheckers.clearBoard();
+    my_checkers.clearBoard();
   }
   if (msg->reset) {
-    myCheckers.resetBoard();
+    my_checkers.resetBoard();
     return;
   }
 
@@ -19,34 +24,19 @@ void addPieceCallback(const checkers_ai::AddPiece::ConstPtr& msg) {
 
   if (validPos(p)) {
     if (msg->color) {
-      myCheckers.addPiece(p,WHITE,msg->king);
+      my_checkers.addPiece(p,WHITE,msg->king);
     } else {
-      myCheckers.addPiece(p,BLACK,msg->king);
+      my_checkers.addPiece(p,BLACK,msg->king);
     }
   }
 }
 
-void movePieceCallback(const checkers_ai::MovePiece::ConstPtr& msg) {
-  pos p{msg->start_i, msg->start_j};
-  pos q{msg->end_i, msg->end_j};
-  move_t m;
-  m.push_back(p);
-  m.push_back(q);
-
-  myCheckers.applyMove(m);
-}
-
-void getMoveService(checkers_ai::GetMove::Request &req,
-                    checkers_ai::GetMove::Response &res) {
-  myCheckers.setPly(req.ply);
-  PieceType color = req.color ? WHITE : BLACK;
-  move_t m = myCheckers.aiMove(color, GAMETREE);
-  
-  char buff[100];
-  for (auto p : m) {
-    sprintf(buff,"(%d,%d) ",p.i,p.j);
+void stateCallback(const std_msgs::String::ConstPtr& msg) {
+  string state = msg->data;
+  if (state.compare(last_state) != 0 && state.compare("AI_COMPUTE") == 0) {
+  //TODO
   }
-  res.move = buff;
+  last_state = state;
 }
 
 int main(int argc, char **argv) {
@@ -55,7 +45,7 @@ int main(int argc, char **argv) {
   ros::NodeHandle n;
   int queue_size = 10;
   ros::Subscriber add_sub  = n.subscribe("add_piece", queue_size, addPieceCallback);
-  ros::Subscriber move_sub = n.subscribe("move_piece", queue_size, movePieceCallback);
+  ros::Subscriber state_sub = n.subscribe("state", queue_size, stateCallback);
 
   ros::spin();
 
