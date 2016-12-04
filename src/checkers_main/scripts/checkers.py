@@ -7,7 +7,7 @@ class Data:
     pass
 
 # store our state
-# possible states: START, HUMAN_MOVE, COMPUTE, MOVE_ARM
+# possible states: START, HUMAN_MOVE, AI_COMPUTE, MOVE_ARM
 D = Data()
 D.state = "START"
 
@@ -26,13 +26,13 @@ def eventCallback(msg):
 
     elif msg.data == "VIS:FINISHED":
         if D.state == "HUMAN_MOVE":
-            D.state = "COMPUTE"
+            D.state = "AI_COMPUTE"
         else:
             rospy.logerr("Bad state transition, resetting state machine")
             D.state = "START"
 
     elif msg.data == "AI:FINISHED":
-        if D.state == "COMPUTE":
+        if D.state == "AI_COMPUTE":
             D.state = "MOVE_ARM"
         else:
             rospy.logerr("Bad state transition, resetting state machine")
