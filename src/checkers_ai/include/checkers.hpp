@@ -63,6 +63,7 @@ class Checkers {
   void setPly(int ply);
 
   bool addPiece(pos p, PieceType color, bool king);
+  bool remove(pos p);
   bool applyMove(move_t move);
 
   void humanMove(PieceType color);
@@ -88,7 +89,6 @@ class Checkers {
   move_t minimax(int depth, float &val, float alpha, float beta, bool max_player, PieceType color);
 
   bool move(pos start, pos end);
-  bool remove(pos p);
   bool undoMove(move_t move, bool prev_kings[8][8]);
 
   int numPieces(PieceType color) const;
