@@ -16,7 +16,7 @@ ros::Subscriber<std_msgs::Bool> emSub("electromagnet", emCb);
 ros::Subscriber<checkers_arm::JointAngles> armSub("arm_position", armCb);
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(57600);
   initServos();
   initElectromagnet();
   nh.subscribe(emSub);

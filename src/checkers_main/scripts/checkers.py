@@ -59,10 +59,10 @@ def main():
     state_pub = rospy.Publisher('state', String)
     rospy.Subscriber('event', String, eventCallback)
 
-    r = rospy.Rate(2) #2 Hz
+    r = rospy.Rate(5) #5 Hz
     while not rospy.is_shutdown():
-        r.sleep()
         state_pub.publish(D.state)
+        r.sleep()
 
 
 if __name__ == "__main__":

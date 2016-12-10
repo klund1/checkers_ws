@@ -21,12 +21,12 @@ void setArmPosition(float a0, float a1, float a2, float a3) {
     float write_angle = map(a1,0,180,180,0);
     joint1.write(write_angle);
   }
-  if (a2 >= -90 && a2 <= 90) {
-    float write_angle = map(a2,-90,90,0,180);
+  if (a2 >= 0 && a2 <= 180) {
+    float write_angle = map(a2,0,180,180,0);
     joint2.write(write_angle);
   }
   if (a3 >= -90 && a3 <= 90) {
-    float write_angle = map(a3,-90,90,0,160);
+    float write_angle = map(a3,-90,90,160,0);
     joint3.write(write_angle);
   }
 }
@@ -37,7 +37,7 @@ void initServos() {
   joint2.attach(J2);
   joint3.attach(J3);
   //move arm to default position
-  setArmPosition(0,45,-45,0);
+  setArmPosition(0,0,0,0);
 }
 
 void initElectromagnet() {
