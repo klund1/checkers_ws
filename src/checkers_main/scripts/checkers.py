@@ -7,7 +7,7 @@ class Data:
     pass
 
 # store our state
-# possible states: START, HUMAN_MOVE, AI_COMPUTE, MOVE_ARM
+# possible states: START, HUMAN_MOVE, VIS, AI_COMPUTE, MOVE_ARM
 D = Data()
 D.state = "START"
 
@@ -24,8 +24,17 @@ def eventCallback(msg):
             rospy.logerr("Bad state transition, resetting state machine")
             D.state = "START"
 
-    elif msg.data == "VIS:FINISHED":
+    elif msg.data == "HUMAN:FINISHED":
         if D.state == "HUMAN_MOVE":
+            D.state = "VIS"
+        else:
+            #rospy.logerr("Bad state transition, resetting state machine")
+            #D.state = "START"
+            # this is ok because this is just a button that might get pressed out of turn
+            pass
+
+    elif msg.data == "VIS:FINISHED":
+        if D.state == "VIS":
             D.state = "AI_COMPUTE"
         else:
             rospy.logerr("Bad state transition, resetting state machine")
@@ -56,8 +65,8 @@ def main():
 
     rospy.init_node('checkers_main')
 
-    state_pub = rospy.Publisher('state', String)
-    rospy.Subscriber('event', String, eventCallback)
+    state_pub = rospy.Publisher('state', String, queue_size = 10)
+    rospy.Subscriber('event', String, eventCallback, queue_size = 10)
 
     r = rospy.Rate(5) #5 Hz
     while not rospy.is_shutdown():
