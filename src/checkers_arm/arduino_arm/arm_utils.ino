@@ -4,6 +4,7 @@
 #define J2 4
 #define J3 5
 #define EM_PIN 6
+#define BUTTON_PIN 7
 
 #include <Servo.h>
 Servo joint0, joint1, joint2, joint3;
@@ -37,10 +38,18 @@ void initServos() {
   joint2.attach(J2);
   joint3.attach(J3);
   //move arm to default position
-  setArmPosition(0,0,0,0);
+  setArmPosition(0,90,0,0);
 }
 
 void initElectromagnet() {
   pinMode(EM_PIN, OUTPUT);
   setElectromagnet(false);
+}
+
+void initButton() {
+  pinMode(BUTTON_PIN, INPUT);
+}
+
+bool button_val() {
+  return digitalRead(BUTTON_PIN);
 }
